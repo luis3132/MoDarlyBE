@@ -38,6 +38,6 @@ public class Venta {
     @JoinColumn(name = "Cliente", referencedColumnName = "cedula", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "venttall", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<Venttall> venttall;
 }

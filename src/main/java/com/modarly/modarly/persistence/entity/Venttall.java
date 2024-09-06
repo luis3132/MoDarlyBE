@@ -4,6 +4,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,11 @@ public class Venttall {
 
     private Integer cantidad;
     private Integer precioFinal;
+
+    @ManyToOne
+    @MapsId("venta")
+    @JoinColumn(name = "venta")
+    private Venta venta;
 
     @ManyToOne
     @JoinColumn(name = "Talla", referencedColumnName = "id", insertable = false, updatable = false)

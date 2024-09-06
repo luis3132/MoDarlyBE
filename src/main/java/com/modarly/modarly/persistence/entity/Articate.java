@@ -4,6 +4,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,11 @@ public class Articate {
     private ArticatePK id;
 
     @ManyToOne
-    @JoinColumn(name = "Categoria", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapsId("articulo")
+    @JoinColumn(name = "articulo")
+    private Articulo articulo;
+
+    @ManyToOne
+    @JoinColumn(name = "Categoria", referencedColumnName = "id")
     private Categoria categoria;
 }

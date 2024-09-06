@@ -22,8 +22,8 @@ public class Cliente {
     @Id
     private String cedula;
     
-    private String nombre;
-    private String apellido;
+    private String nombres;
+    private String apellidos;
     private String telefono;
     private String fijo;
     private String descripcion;
