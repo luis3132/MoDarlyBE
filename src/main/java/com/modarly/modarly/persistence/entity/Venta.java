@@ -38,6 +38,9 @@ public class Venta {
     @JoinColumn(name = "Cliente", referencedColumnName = "cedula", insertable = false, updatable = false)
     private Cliente cliente;
 
+    private Integer pagacon;
+    private Integer vueltos;
+
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<Venttall> venttall;
 }

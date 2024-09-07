@@ -53,3 +53,7 @@ CREATE TABLE venttall(
 );
 INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente');
 ALTER TABLE MoDarly.venttall ADD precioFinal INT NULL;
+ALTER TABLE MoDarly.Cliente ADD mayorista BOOL NULL;
+ALTER TABLE MoDarly.Venta ADD pagacon INT NULL;
+ALTER TABLE MoDarly.Venta ADD vueltos INT NULL;
+ALTER TABLE MoDarly.Cliente ADD fechaCreacion DATE NULL;

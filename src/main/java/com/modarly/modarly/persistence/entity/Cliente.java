@@ -1,5 +1,7 @@
 package com.modarly.modarly.persistence.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -27,4 +29,6 @@ public class Cliente {
     private String telefono;
     private String fijo;
     private String descripcion;
+    private Boolean mayorista;
+    private Date fechaCreacion;
 }
