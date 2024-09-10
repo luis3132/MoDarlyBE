@@ -27,10 +27,11 @@ public class Articate {
 
     @ManyToOne
     @MapsId("articulo")
-    @JoinColumn(name = "articulo")
+    @JoinColumn(name = "articulo" , referencedColumnName = "id", insertable = false, updatable = false)
     private Articulo articulo;
 
     @ManyToOne
-    @JoinColumn(name = "Categoria", referencedColumnName = "id")
+    @MapsId("categoria")
+    @JoinColumn(name = "categoria", referencedColumnName = "id", insertable = false, updatable = false)
     private Categoria categoria;
 }
