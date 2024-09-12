@@ -16,8 +16,8 @@ CREATE TABLE articate(
 	articulo int not null,
 	categoria int not null,
 	CONSTRAINT articate_pk primary key(articulo, categoria),
-	CONSTRAINT articate_fk foreign key (articulo) references Articulo (id) on delete no action on UPDATE no action,
-	CONSTRAINT articate_fk_1 foreign key (categoria) references Categoria (id) on DELETE no action on UPDATE no action
+	CONSTRAINT articate_fk foreign key (articulo) references Articulo (id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT articate_fk_1 foreign key (categoria) references Categoria (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE Talla(
 	id bigint auto_increment,
@@ -48,8 +48,8 @@ CREATE TABLE venttall(
 	talla bigint not null,
 	cantidad int not null,
 	CONSTRAINT venttall_pk primary key (venta, talla),
-	CONSTRAINT venttall_fk foreign key (venta) references Venta (id) on DELETE no action on UPDATE no action,
-	CONSTRAINT venttall_fk_1 foreign key (talla) references Talla (id) on DELETE no action on UPDATE no action
+	CONSTRAINT venttall_fk foreign key (venta) references Venta (id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT venttall_fk_1 foreign key (talla) references Talla (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente');
 ALTER TABLE MoDarly.venttall ADD precioFinal INT NULL;
