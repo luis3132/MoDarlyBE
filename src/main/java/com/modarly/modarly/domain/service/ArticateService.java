@@ -1,5 +1,6 @@
 package com.modarly.modarly.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class ArticateService implements IArticateService {
     @Override
     public Articate save(Articate articate) {
         return articateRepository.save(articate);
+    }
+
+    @Override
+    public List<Articate> saveAll(List<Articate> articates) {
+        return articateRepository.saveAll(articates);
     }
 
     @Override

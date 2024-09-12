@@ -1,5 +1,6 @@
 package com.modarly.modarly.domain.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,12 @@ public class ArticateController {
     
     @Autowired
     private ArticateService articateService;
+
+    @PostMapping("/new/list")
+    public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<Articate> articates) {
+        return new ResponseEntity<>(articateService.saveAll(articates), HttpStatus.CREATED);
+    }
+    
 
     @PostMapping("/new")
     public ResponseEntity<Articate> createArticate(@RequestBody Articate articate) {
