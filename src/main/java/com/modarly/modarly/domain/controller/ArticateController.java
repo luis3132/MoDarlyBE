@@ -2,6 +2,7 @@ package com.modarly.modarly.domain.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.modarly.modarly.domain.dto.articateDTO;
 import com.modarly.modarly.domain.service.ArticateService;
+import com.modarly.modarly.domain.service.ArticuloService;
+import com.modarly.modarly.domain.service.CategoriaService;
 import com.modarly.modarly.persistence.entity.Articate;
+import com.modarly.modarly.persistence.entity.ArticatePK;
+import com.modarly.modarly.persistence.entity.Articulo;
+import com.modarly.modarly.persistence.entity.Categoria;
 
 /**
  * 
@@ -25,15 +32,26 @@ import com.modarly.modarly.persistence.entity.Articate;
 @RestController
 @RequestMapping("/api/articate")
 public class ArticateController {
-    
+
     @Autowired
     private ArticateService articateService;
+    @Autowired
+    private ArticuloService articuloService;
+    @Autowired
+    private CategoriaService categoriaService;
 
     @PostMapping("/new/list")
-    public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<Articate> articates) {
-        return new ResponseEntity<>(articateService.saveAll(articates), HttpStatus.CREATED);
+    public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<articateDTO> articates) {
+        List<Articate> articateList = articates.stream().map(articateDTO -> {
+            Articulo articulo = articuloService.findById(articateDTO.getArticulo())
+                    .orElseThrow(() -> new RuntimeException("Articulo not found"));
+            Categoria categoria = categoriaService.findById(articateDTO.getCategoria())
+                    .orElseThrow(() -> new RuntimeException("Categoria not found"));
+            ArticatePK id = new ArticatePK(articulo.getId(), categoria.getId());
+            return new Articate(id, articulo, categoria);
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(articateService.saveAll(articateList), HttpStatus.CREATED);
     }
-    
 
     @PostMapping("/new")
     public ResponseEntity<Articate> createArticate(@RequestBody Articate articate) {
@@ -59,5 +77,5 @@ public class ArticateController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
 }

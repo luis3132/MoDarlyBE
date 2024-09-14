@@ -1,5 +1,7 @@
 package com.modarly.modarly.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -26,11 +28,13 @@ public class Articate {
     private ArticatePK id;
 
     @ManyToOne
+    @JsonBackReference
     @MapsId("articulo")
     @JoinColumn(name = "articulo" , referencedColumnName = "id", insertable = false, updatable = false)
     private Articulo articulo;
 
     @ManyToOne
+    @JsonBackReference
     @MapsId("categoria")
     @JoinColumn(name = "categoria", referencedColumnName = "id", insertable = false, updatable = false)
     private Categoria categoria;

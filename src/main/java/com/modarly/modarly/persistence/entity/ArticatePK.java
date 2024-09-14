@@ -3,7 +3,9 @@ package com.modarly.modarly.persistence.entity;
 import java.io.Serializable;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -11,6 +13,8 @@ import lombok.Data;
  */
 @Embeddable
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ArticatePK implements Serializable {
     private Integer articulo;
     private Integer categoria;
