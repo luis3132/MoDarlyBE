@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class articateDTO {
+public class ArticateDTO {
     private Integer articulo;
     private Integer categoria;
 }

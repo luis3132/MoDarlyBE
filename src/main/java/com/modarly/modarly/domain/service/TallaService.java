@@ -39,8 +39,8 @@ public class TallaService implements ITallaService {
     }
 
     @Override
-    public Talla saveId(Talla talla) {
-        return tallaRepository.save(talla);
+    public List<Talla> saveId(List<Talla> talla) {
+        return tallaRepository.saveAll(talla);
     }
 
     @Override
@@ -56,14 +56,19 @@ public class TallaService implements ITallaService {
     }
 
     @Override
-    public Boolean delete(Long id) {
-        Optional<Talla> talla = findById(id);
-        if (talla.isPresent()) {
-            tallaRepository.deleteById(id);;
-            return true;
-        } else {
-            return false;
-        }
+    public List<Boolean> delete(List<Long> id) {
+        List<Boolean> result = id.stream().map(
+            idTalla -> {
+                Optional<Talla> talla = findById(idTalla);
+                if (talla.isPresent()) {
+                    tallaRepository.deleteById(idTalla);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        ).collect(Collectors.toList());
+        return result;
     }
 
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.modarly.modarly.domain.dto.articateDTO;
+import com.modarly.modarly.domain.dto.ArticateDTO;
 import com.modarly.modarly.domain.service.ArticateService;
 import com.modarly.modarly.domain.service.ArticuloService;
 import com.modarly.modarly.domain.service.CategoriaService;
@@ -41,7 +41,7 @@ public class ArticateController {
     private CategoriaService categoriaService;
 
     @PostMapping("/new/list")
-    public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<articateDTO> articates) {
+    public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<ArticateDTO> articates) {
         List<Articate> articateList = articates.stream().map(articateDTO -> {
             Articulo articulo = articuloService.findById(articateDTO.getArticulo())
                     .orElseThrow(() -> new RuntimeException("Articulo not found"));
@@ -69,9 +69,10 @@ public class ArticateController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Articate> deleteArticate(@RequestBody Articate articate) {
-        if (articateService.findById(articate.getId()).isPresent()) {
-            articateService.delete(articate.getId());
+    public ResponseEntity<Articate> deleteArticate(@RequestBody ArticateDTO articate) {
+        ArticatePK id = new ArticatePK(articate.getArticulo(), articate.getCategoria());
+        if (articateService.findById(id).isPresent()) {
+            articateService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

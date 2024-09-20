@@ -9,7 +9,7 @@ import com.modarly.modarly.persistence.entity.Talla;
 public interface ITallaService {
     public Optional<Talla> findById(Long id);
     public Talla save(TallaDTO talla);
-    public Talla saveId(Talla talla);
+    public List<Talla> saveId(List<Talla> talla);
     public List<Talla> saveAll(List<TallaDTO> tallas);
-    public Boolean delete(Long id);
+    public List<Boolean> delete(List<Long> id);
 }

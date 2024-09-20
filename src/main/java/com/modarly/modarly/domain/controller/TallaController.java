@@ -48,7 +48,7 @@ public class TallaController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Talla> updateTalla(@RequestBody Talla talla) {
+    public ResponseEntity<List<Talla>> updateTalla(@RequestBody List<Talla> talla) {
         return new ResponseEntity<>(tallaService.saveId(talla), HttpStatus.OK);
     }
 
@@ -57,8 +57,8 @@ public class TallaController {
         return new ResponseEntity<>(tallaService.saveAll(tallas), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteTalla(@PathVariable("id") Long id) {
+    @DeleteMapping("/delete/list")
+    public ResponseEntity<List<Boolean>> deleteTalla(@RequestBody List<Long> id) {
         return new ResponseEntity<>(tallaService.delete(id), HttpStatus.OK);
     }
 
