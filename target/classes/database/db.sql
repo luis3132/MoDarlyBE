@@ -25,7 +25,7 @@ CREATE TABLE Talla(
 	talla varchar(5) not null,
 	cantidad int default 0,
 	CONSTRAINT talla_pk primary key (id),
-	CONSTRAINT talla_fk foreign key (articulo) references Articulo (id) on DELETE no action on UPDATE no action
+	CONSTRAINT talla_fk foreign key (articulo) references Articulo (id) on DELETE CASCADE on UPDATE CASCADE
 );
 CREATE TABLE Cliente(
 	cedula varchar(20) not null,
