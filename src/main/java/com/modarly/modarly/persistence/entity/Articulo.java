@@ -37,10 +37,9 @@ public class Articulo {
     private Integer precioMayorista;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
-    @JsonManagedReference
+    @JsonManagedReference("articulo-articate")
     private List<Articate> articate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
-    @JsonManagedReference
     private List<Talla> tallas;
 }

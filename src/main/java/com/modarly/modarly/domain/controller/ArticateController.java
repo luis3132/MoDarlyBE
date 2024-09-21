@@ -79,4 +79,17 @@ public class ArticateController {
         }
     }
 
+    @DeleteMapping("/delete/list")
+    public ResponseEntity<List<Boolean>> deleteArticateList(@RequestBody List<ArticateDTO> articates) {
+        List<Boolean> results = articates.stream().map(articate -> {
+            ArticatePK id = new ArticatePK(articate.getArticulo(), articate.getCategoria());
+            if (articateService.findById(id).isPresent()) {
+                return articateService.delete(id);
+            } else {
+                return false;
+            }
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
 }

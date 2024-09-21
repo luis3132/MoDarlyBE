@@ -28,13 +28,13 @@ public class Articate {
     private ArticatePK id;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("articulo-articate")
     @MapsId("articulo")
     @JoinColumn(name = "articulo" , referencedColumnName = "id", insertable = false, updatable = false)
     private Articulo articulo;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference("categoria-articate")
     @MapsId("categoria")
     @JoinColumn(name = "categoria", referencedColumnName = "id", insertable = false, updatable = false)
     private Categoria categoria;
