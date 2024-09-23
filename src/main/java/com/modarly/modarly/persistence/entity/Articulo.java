@@ -41,5 +41,6 @@ public class Articulo {
     private List<Articate> articate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
+    @JsonManagedReference("articulo-talla")
     private List<Talla> tallas;
 }

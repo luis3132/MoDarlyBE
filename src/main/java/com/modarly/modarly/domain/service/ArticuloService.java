@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.modarly.modarly.domain.dto.ArticuloCategoriaDTO;
 import com.modarly.modarly.domain.dto.ArticuloDTO;
+import com.modarly.modarly.domain.dto.TallaBasica;
 import com.modarly.modarly.persistence.entity.Articulo;
 import com.modarly.modarly.persistence.entity.Categoria;
 import com.modarly.modarly.persistence.repository.ArticuloRepository;
@@ -46,8 +47,19 @@ public class ArticuloService implements IArticuloService {
                                                     return categoria;
                                                 })
                                                 .collect(Collectors.toList()); 
-            artDTO.setCategorias(categorias);  
-            artDTO.setTallas(art.getTallas());          
+            artDTO.setCategorias(categorias);
+            List<TallaBasica> tallaDTOs = art.getTallas()
+                                               .stream()
+                                               .map(talla -> {
+                                                   TallaBasica tallaDTO = new TallaBasica();
+                                                   tallaDTO.setId(talla.getId());
+                                                   tallaDTO.setTalla(talla.getTalla());
+                                                   tallaDTO.setCantidad(talla.getCantidad());
+                                                   tallaDTO.setArticulo(talla.getArticulo().getId());
+                                                   return tallaDTO;
+                                               })
+                                               .collect(Collectors.toList());
+            artDTO.setTallas(tallaDTOs);          
             articuloDTO.add(artDTO);
         }
         return articuloDTO;

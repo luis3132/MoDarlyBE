@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.modarly.modarly.domain.dto.TallaBasica;
 import com.modarly.modarly.domain.dto.TallaDTO;
 import com.modarly.modarly.domain.service.TallaService;
 import com.modarly.modarly.persistence.entity.Talla;
@@ -44,17 +45,17 @@ public class TallaController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Talla> createTalla(@RequestBody TallaDTO talla) {
+    public ResponseEntity<TallaBasica> createTalla(@RequestBody TallaDTO talla) {
         return new ResponseEntity<>(tallaService.save(talla), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<List<Talla>> updateTalla(@RequestBody List<Talla> talla) {
+    public ResponseEntity<List<Talla>> updateTalla(@RequestBody List<TallaBasica> talla) {
         return new ResponseEntity<>(tallaService.saveId(talla), HttpStatus.OK);
     }
 
     @PostMapping("/new/list")
-    public ResponseEntity<List<Talla>> createTallas(@RequestBody List<TallaDTO> tallas) {
+    public ResponseEntity<List<TallaBasica>> createTallas(@RequestBody List<TallaDTO> tallas) {
         return new ResponseEntity<>(tallaService.saveAll(tallas), HttpStatus.CREATED);
     }
 
