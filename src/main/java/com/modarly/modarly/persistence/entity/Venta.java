@@ -3,6 +3,8 @@ package com.modarly.modarly.persistence.entity;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,5 +44,6 @@ public class Venta {
     private Integer vueltos;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @JsonManagedReference("venta-venttall")
     private List<Venttall> venttall;
 }

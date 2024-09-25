@@ -1,5 +1,7 @@
 package com.modarly.modarly.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -30,10 +32,12 @@ public class Venttall {
 
     @ManyToOne
     @MapsId("venta")
-    @JoinColumn(name = "venta")
+    @JsonBackReference("venta-venttall")
+    @JoinColumn(name = "venta", referencedColumnName = "id", insertable = false, updatable = false)
     private Venta venta;
 
     @ManyToOne
+    @MapsId("talla")
     @JoinColumn(name = "Talla", referencedColumnName = "id", insertable = false, updatable = false)
     private Talla talla;
 }
