@@ -1,6 +1,6 @@
 package com.modarly.modarly.persistence.repository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,11 +18,13 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     @Query("SELECT COUNT(*) FROM Venta v WHERE v.cliente.cedula = :cliente")
     Integer countVentasByCliente(@Param("cliente") String cliente);
 
-    @Query("SELECT v FROM Venta v WHERE v.fecha = CURDATE() AND v.cliente.cedula = :cliente")
-    List<Venta> findVentasByHoyCliente(@Param("cliente") String cliente);
+    @Query("SELECT v FROM Venta v WHERE v.fecha BETWEEN :startOfDay AND :endOfDay AND v.cliente.cedula = :cliente")
+    List<Venta> findVentasByHoyCliente(@Param("startOfDay") Date startOfDay, @Param("endOfDay") Date endOfDay,
+            @Param("cliente") String cliente);
 
     @Query("SELECT v FROM Venta v WHERE v.fecha BETWEEN :inicio AND :fin AND v.cliente.cedula = :cliente")
-    List<Venta> findVentasByRangoCliente(@Param("inicio") Date inicio, @Param("fin") Date fin, @Param("cliente") String cliente);
+    List<Venta> findVentasByRangoCliente(@Param("inicio") Date inicio, @Param("fin") Date fin,
+            @Param("cliente") String cliente);
 
     @Query("SELECT v FROM Venta v WHERE MONTH(v.fecha) = MONTH(:inicio) AND v.cliente.cedula = :cliente")
     List<Venta> findVentasByMesCliente(@Param("inicio") Date inicio, @Param("cliente") String cliente);
@@ -30,8 +32,8 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     @Query("SELECT v FROM Venta v WHERE YEAR(v.fecha) = YEAR(:inicio) AND v.cliente.cedula = :cliente")
     List<Venta> findVentasByAnioCliente(@Param("inicio") Date inicio, @Param("cliente") String cliente);
 
-    @Query("SELECT v FROM Venta v WHERE v.fecha = CURDATE()")
-    List<Venta> findVentasByHoy();
+    @Query("SELECT v FROM Venta v WHERE v.fecha BETWEEN :startOfDay AND :endOfDay")
+    List<Venta> findVentasByHoy(@Param("startOfDay") Date startOfDay, @Param("endOfDay") Date endOfDay);
 
     @Query("SELECT v FROM Venta v WHERE v.fecha BETWEEN :inicio AND :fin")
     List<Venta> findVentasByRango(@Param("inicio") Date inicio, @Param("fin") Date fin);

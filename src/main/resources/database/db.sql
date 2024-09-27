@@ -38,7 +38,7 @@ CREATE TABLE Cliente(
 );
 CREATE TABLE Venta(
 	id bigint auto_increment,
-	fecha date not null,
+	fecha datetime not null,
 	cliente varchar(20) not null,
 	CONSTRAINT venta_pk primary key (id),
 	CONSTRAINT venta_fk foreign key (cliente) references Cliente (cedula) on DELETE no action on UPDATE no action

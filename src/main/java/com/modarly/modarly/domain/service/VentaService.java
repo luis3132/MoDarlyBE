@@ -1,6 +1,8 @@
 package com.modarly.modarly.domain.service;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class VentaService implements IVentaService {
 
     @Autowired
     private VentaRepository ventaRepository;
-    
+
     @Autowired
     private ClienteService clienteService;
 
@@ -28,7 +30,7 @@ public class VentaService implements IVentaService {
         Venta ventaEntity = convertToEntity(venta);
         return ventaRepository.save(ventaEntity);
     }
-    
+
     @Override
     public Integer countVentasByCliente(String cliente) {
         return ventaRepository.countVentasByCliente(cliente);
@@ -36,10 +38,11 @@ public class VentaService implements IVentaService {
 
     @Override
     public List<Venta> findVentasByHoy(String cliente) {
+        List<Date> startAndEndOfDay = getStartAndEndOfDay();
         if (cliente == null) {
-            return ventaRepository.findVentasByHoy();
+            return ventaRepository.findVentasByHoy(startAndEndOfDay.get(0), startAndEndOfDay.get(1));
         } else {
-            return ventaRepository.findVentasByHoyCliente(cliente);
+            return ventaRepository.findVentasByHoyCliente(startAndEndOfDay.get(0), startAndEndOfDay.get(1), cliente);
         }
     }
 
@@ -88,5 +91,23 @@ public class VentaService implements IVentaService {
         ventaEntity.setVueltos(venta.getVueltos());
         return ventaEntity;
     }
-    
+
+    private List<Date> getStartAndEndOfDay() {
+        List<Date> list = new ArrayList<Date>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        list.add(calendar.getTime());
+
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        list.add(calendar.getTime());
+
+        return list;
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.modarly.modarly.domain.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.modarly.modarly.domain.dto.VentaDTO;
