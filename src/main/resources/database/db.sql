@@ -51,7 +51,7 @@ CREATE TABLE venttall(
 	CONSTRAINT venttall_fk foreign key (venta) references Venta (id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT venttall_fk_1 foreign key (talla) references Talla (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente');
+INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion, mayorista) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente', 0);
 ALTER TABLE MoDarly.venttall ADD precioFinal INT NULL;
 ALTER TABLE MoDarly.Cliente ADD mayorista BOOL NULL;
 ALTER TABLE MoDarly.Venta ADD pagacon INT NULL;
