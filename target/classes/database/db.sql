@@ -57,3 +57,4 @@ ALTER TABLE MoDarly.Cliente ADD mayorista BOOL NULL;
 ALTER TABLE MoDarly.Venta ADD pagacon INT NULL;
 ALTER TABLE MoDarly.Venta ADD vueltos INT NULL;
 ALTER TABLE MoDarly.Cliente ADD fechaCreacion DATE NULL;
+ALTER TABLE MoDarly.Venta ADD metodo_de_pago varchar(20) NOT NULL;

@@ -89,6 +89,7 @@ public class VentaService implements IVentaService {
         ventaEntity.setFecha(venta.getFecha());
         ventaEntity.setPagacon(venta.getPagacon());
         ventaEntity.setVueltos(venta.getVueltos());
+        ventaEntity.setMetodoDePago(venta.getMetodoDePago());
         return ventaEntity;
     }
 

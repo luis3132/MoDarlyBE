@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,6 +48,9 @@ public class Venta {
 
     private Integer pagacon;
     private Integer vueltos;
+
+    @Column(name = "metodo_de_pago")
+    private String metodoDePago;
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     @JsonManagedReference("venta-venttall")

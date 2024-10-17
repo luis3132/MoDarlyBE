@@ -14,4 +14,5 @@ public class VentaDTO {
     private String cliente;
     private Integer pagacon;
     private Integer vueltos;
+    private String metodoDePago;
 }
