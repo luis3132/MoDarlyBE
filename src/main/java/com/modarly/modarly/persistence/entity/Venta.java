@@ -43,7 +43,7 @@ public class Venta {
     private Date fecha;
     
     @ManyToOne
-    @JoinColumn(name = "Cliente", referencedColumnName = "cedula", insertable = false, updatable = false)
+    @JoinColumn(name = "Cliente", referencedColumnName = "cedula")
     private Cliente cliente;
 
     private Integer pagacon;

@@ -38,6 +38,7 @@ public class TallaService implements ITallaService {
     @Override
     public TallaBasica save(TallaDTO talla) {
         Talla tallaEntity = convertToEntity(talla);
+        tallaEntity.setEstado(true);
         Talla tallaSaved = tallaRepository.save(tallaEntity);
         return convertToDTO(tallaSaved);
     }
@@ -55,6 +56,7 @@ public class TallaService implements ITallaService {
     public List<TallaBasica> saveAll(List<TallaDTO> tallas) {
         List<Talla> tallasEntity = tallas.stream().map(talla -> {
             Talla tallaEntity = convertToEntity(talla);
+            tallaEntity.setEstado(true);
             return tallaEntity;
         }).collect(Collectors.toList());
         List<Talla> tallasSaved = tallaRepository.saveAll(tallasEntity);
@@ -71,7 +73,8 @@ public class TallaService implements ITallaService {
             idTalla -> {
                 Optional<Talla> talla = findById(idTalla);
                 if (talla.isPresent()) {
-                    tallaRepository.deleteById(idTalla);
+                    talla.get().setEstado(false);
+                    tallaRepository.save(talla.get());
                     return true;
                 } else {
                     return false;
@@ -106,6 +109,7 @@ public class TallaService implements ITallaService {
         tallaDTO.setId(talla.getId());
         tallaDTO.setTalla(talla.getTalla());
         tallaDTO.setCantidad(talla.getCantidad());
+        tallaDTO.setEstado(talla.getEstado());
         tallaDTO.setArticulo(talla.getArticulo().getId());
         return tallaDTO;
     }

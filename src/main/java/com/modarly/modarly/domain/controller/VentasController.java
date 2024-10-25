@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.modarly.modarly.domain.dto.VentaBasicaDTO;
 import com.modarly.modarly.domain.dto.VentaDTO;
 import com.modarly.modarly.domain.service.VentaService;
 import com.modarly.modarly.persistence.entity.Venta;
@@ -27,8 +28,8 @@ public class VentasController {
     private VentaService ventaService;
 
     @PostMapping("/new")
-    public Venta createVenta(@RequestBody VentaDTO venta) {
-        return ventaService.save(venta);
+    public ResponseEntity<VentaBasicaDTO> createVenta(@RequestBody VentaDTO venta) {
+        return new ResponseEntity<>(ventaService.save(venta), HttpStatus.CREATED);
     }
 
     @GetMapping("/count/{cliente}")

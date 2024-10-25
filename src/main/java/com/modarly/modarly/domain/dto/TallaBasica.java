@@ -16,4 +16,5 @@ public class TallaBasica {
     private String talla;
     private Integer cantidad;
     private Integer articulo;
+    private Boolean estado;
 }

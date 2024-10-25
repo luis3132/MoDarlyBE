@@ -10,10 +10,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 
+ * @autor Luis Andres Gonzalez Corzo
+ */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class VentaDTO {
+@AllArgsConstructor
+public class VentaBasicaDTO {
+    private Long id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
     private Date fecha;

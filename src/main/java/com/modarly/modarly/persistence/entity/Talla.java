@@ -2,6 +2,7 @@ package com.modarly.modarly.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,9 @@ public class Talla {
 
     private String talla;
     private Integer cantidad;
+
+    @Column(columnDefinition = "BOOLEAN DEFAULT true")
+    private Boolean estado;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("tallas")

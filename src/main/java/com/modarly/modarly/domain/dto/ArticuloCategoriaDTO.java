@@ -22,6 +22,7 @@ public class ArticuloCategoriaDTO {
     private String descripcion;
     private Integer precioDetal;
     private Integer precioMayorista;
+    private Boolean estado;
     List<Categoria> categorias;
     List<TallaBasica> tallas;
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.modarly.modarly.domain.dto.VentaBasicaDTO;
 import com.modarly.modarly.domain.dto.VentaDTO;
 import com.modarly.modarly.persistence.entity.Cliente;
 import com.modarly.modarly.persistence.entity.Venta;
@@ -26,9 +27,10 @@ public class VentaService implements IVentaService {
     private ClienteService clienteService;
 
     @Override
-    public Venta save(VentaDTO venta) {
+    public VentaBasicaDTO save(VentaDTO venta) {
         Venta ventaEntity = convertToEntity(venta);
-        return ventaRepository.save(ventaEntity);
+        Venta ventaSaved = ventaRepository.save(ventaEntity);
+        return convertToDTO(ventaSaved);
     }
 
     @Override
@@ -109,6 +111,17 @@ public class VentaService implements IVentaService {
         list.add(calendar.getTime());
 
         return list;
+    }
+
+    private VentaBasicaDTO convertToDTO(Venta venta) {
+        VentaBasicaDTO ventaDTO = new VentaBasicaDTO();
+        ventaDTO.setId(venta.getId());
+        ventaDTO.setCliente(venta.getCliente().getCedula());
+        ventaDTO.setFecha(venta.getFecha());
+        ventaDTO.setMetodoDePago(venta.getMetodoDePago());
+        ventaDTO.setPagacon(venta.getPagacon());
+        ventaDTO.setVueltos(venta.getVueltos());
+        return ventaDTO;
     }
 
 }

@@ -3,6 +3,7 @@ package com.modarly.modarly.domain.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.modarly.modarly.domain.dto.ClienteDTO;
 import com.modarly.modarly.persistence.entity.Cliente;
 
 
@@ -13,6 +14,6 @@ import com.modarly.modarly.persistence.entity.Cliente;
 public interface IClienteService {
     List<Cliente> findAll();
     Optional<Cliente> findById(String cedula);
-    Cliente save(Cliente cliente);
+    Cliente save(ClienteDTO cliente);
     Boolean delete(String cedula);
 }

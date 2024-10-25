@@ -34,33 +34,38 @@ public class ArticuloService implements IArticuloService {
         List<Articulo> articulo = articuloRepository.findAll();
         List<ArticuloCategoriaDTO> articuloDTO = new ArrayList<>();
         for (Articulo art : articulo) {
-            ArticuloCategoriaDTO artDTO = new ArticuloCategoriaDTO();
-            artDTO.setId(art.getId());
-            artDTO.setNombre(art.getNombre());
-            artDTO.setDescripcion(art.getDescripcion());
-            artDTO.setPrecioDetal(art.getPrecioDetal());
-            artDTO.setPrecioMayorista(art.getPrecioMayorista());
-            List<Categoria> categorias = art.getArticate()
-                                                .stream()
-                                                .map(articate -> {
-                                                    Categoria categoria = articate.getCategoria();
-                                                    return categoria;
-                                                })
-                                                .collect(Collectors.toList()); 
-            artDTO.setCategorias(categorias);
-            List<TallaBasica> tallaDTOs = art.getTallas()
-                                               .stream()
-                                               .map(talla -> {
-                                                   TallaBasica tallaDTO = new TallaBasica();
-                                                   tallaDTO.setId(talla.getId());
-                                                   tallaDTO.setTalla(talla.getTalla());
-                                                   tallaDTO.setCantidad(talla.getCantidad());
-                                                   tallaDTO.setArticulo(talla.getArticulo().getId());
-                                                   return tallaDTO;
-                                               })
-                                               .collect(Collectors.toList());
-            artDTO.setTallas(tallaDTOs);          
-            articuloDTO.add(artDTO);
+            if (art.getEstado()) {
+                ArticuloCategoriaDTO artDTO = new ArticuloCategoriaDTO();
+                artDTO.setId(art.getId());
+                artDTO.setNombre(art.getNombre());
+                artDTO.setDescripcion(art.getDescripcion());
+                artDTO.setPrecioDetal(art.getPrecioDetal());
+                artDTO.setPrecioMayorista(art.getPrecioMayorista());
+                artDTO.setEstado(art.getEstado());
+                List<Categoria> categorias = art.getArticate()
+                        .stream()
+                        .map(articate -> {
+                            Categoria categoria = articate.getCategoria();
+                            return categoria;
+                        })
+                        .collect(Collectors.toList());
+                artDTO.setCategorias(categorias);
+                List<TallaBasica> tallaDTOs = art.getTallas()
+                        .stream()
+                        .filter(talla -> Boolean.TRUE.equals(talla.getEstado()))
+                        .map(talla -> {
+                            TallaBasica tallaDTO = new TallaBasica();
+                            tallaDTO.setId(talla.getId());
+                            tallaDTO.setTalla(talla.getTalla());
+                            tallaDTO.setCantidad(talla.getCantidad());
+                            tallaDTO.setArticulo(talla.getArticulo().getId());
+                            tallaDTO.setEstado(talla.getEstado());
+                            return tallaDTO;
+                        })
+                        .collect(Collectors.toList());
+                artDTO.setTallas(tallaDTOs);
+                articuloDTO.add(artDTO);
+            }
         }
         return articuloDTO;
     }
@@ -77,6 +82,7 @@ public class ArticuloService implements IArticuloService {
         newArticulo.setDescripcion(articulo.getDescripcion());
         newArticulo.setPrecioDetal(articulo.getPrecioDetal());
         newArticulo.setPrecioMayorista(articulo.getPrecioMayorista());
+        newArticulo.setEstado(true);
         return articuloRepository.save(newArticulo);
     }
 
@@ -87,11 +93,13 @@ public class ArticuloService implements IArticuloService {
 
     @Override
     public Boolean delete(Integer id) {
-        if (articuloRepository.findById(id).isPresent()) {
-            articuloRepository.deleteById(id);
+        Optional<Articulo> art = articuloRepository.findById(id);
+        if (art.isPresent()) {
+            art.get().setEstado(false);
+            articuloRepository.save(art.get());
             return true;
         }
         return false;
     }
-    
+
 }
