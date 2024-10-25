@@ -33,11 +33,11 @@ public class Venttall {
     @ManyToOne
     @MapsId("venta")
     @JsonBackReference("venta-venttall")
-    @JoinColumn(name = "venta", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "venta", referencedColumnName = "id")
     private Venta venta;
 
     @ManyToOne
     @MapsId("talla")
-    @JoinColumn(name = "Talla", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "Talla", referencedColumnName = "id")
     private Talla talla;
 }

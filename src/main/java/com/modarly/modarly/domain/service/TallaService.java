@@ -47,6 +47,7 @@ public class TallaService implements ITallaService {
     public List<Talla> saveId(List<TallaBasica> talla) {
         List<Talla> tallas = talla.stream().map(tallaDTO -> {
             Talla tallaEntity = convertToEntity(tallaDTO);
+            tallaEntity.setEstado(true);
             return tallaEntity;
         }).collect(Collectors.toList());
         return tallaRepository.saveAll(tallas);
