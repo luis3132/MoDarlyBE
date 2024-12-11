@@ -51,14 +51,15 @@ CREATE TABLE venttall(
 	CONSTRAINT venttall_fk foreign key (venta) references Venta (id) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT venttall_fk_1 foreign key (talla) references Talla (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion, mayorista) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente', 0);
+
 ALTER TABLE MoDarly.venttall ADD precioFinal INT NULL;
 ALTER TABLE MoDarly.Cliente ADD mayorista BOOL NULL;
 ALTER TABLE MoDarly.Venta ADD pagacon INT NULL;
 ALTER TABLE MoDarly.Venta ADD vueltos INT NULL;
-ALTER TABLE MoDarly.Cliente ADD fechaCreacion DATE DEFAULT NOW() NULL;
+ALTER TABLE MoDarly.Cliente ADD fechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE MoDarly.Venta ADD metodo_de_pago varchar(20) NOT NULL;
 ALTER TABLE MoDarly.Articulo ADD estado BOOL NULL;
 ALTER TABLE MoDarly.Talla ADD estado BOOL DEFAULT 1 NULL;
 ALTER TABLE MoDarly.Cliente ADD estado BOOL DEFAULT 1 NULL;
 
+INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion, mayorista) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente', 0);
