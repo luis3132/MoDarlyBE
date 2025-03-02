@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class CategoriaDTO {
     private String padre;
     private String hija;
+    private Boolean estado;
 }

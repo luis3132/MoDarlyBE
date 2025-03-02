@@ -27,4 +27,5 @@ public class Categoria {
 
     private String padre;
     private String hija;
+    private Boolean estado;
 }

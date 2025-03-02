@@ -61,5 +61,6 @@ ALTER TABLE MoDarly.Venta ADD metodo_de_pago varchar(20) NOT NULL;
 ALTER TABLE MoDarly.Articulo ADD estado BOOL NULL;
 ALTER TABLE MoDarly.Talla ADD estado BOOL DEFAULT 1 NULL;
 ALTER TABLE MoDarly.Cliente ADD estado BOOL DEFAULT 1 NULL;
+ALTER TABLE MoDarly.Categoria ADD estado BOOL DEFAULT 1 NOT NULL;
 
 INSERT INTO Cliente (cedula, nombres, apellidos, telefono, fijo, descripcion, mayorista) VALUES('0000', 'Consumidor', 'Final', '1234', '5678', 'Cliente esporadico, no recurrente', 0);

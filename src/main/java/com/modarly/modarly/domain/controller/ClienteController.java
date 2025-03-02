@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @CrossOrigin("*")
 @RequestMapping("/api/cliente")
 public class ClienteController {
-    
+
     @Autowired
     private ClienteService clienteService;
 
@@ -37,28 +37,28 @@ public class ClienteController {
     public List<Cliente> getClientes() {
         return clienteService.findAll();
     }
-    
+
     @GetMapping("/list/{cedula}")
     public ResponseEntity<Cliente> getClienteById(@PathVariable("cedula") String cedula) {
         return clienteService.findById(cedula)
-                    .map(cliente -> new ResponseEntity<>(cliente, HttpStatus.OK))
-                    .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(cliente -> new ResponseEntity<>(cliente, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    
+
     @PostMapping("/new")
     public ResponseEntity<Cliente> createCliente(@RequestBody ClienteDTO cliente) {
         Optional<Cliente> obj = clienteService.findById(cliente.getCedula());
-        if(obj.isPresent()) {
+        if (obj.isPresent()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
         }
     }
-    
+
     @DeleteMapping("/delete/{cedula}")
     public ResponseEntity<Cliente> deleteCliente(@PathVariable("cedula") String cedula) {
         Optional<Cliente> obj = clienteService.findById(cedula);
-        if(obj.isPresent()) {
+        if (obj.isPresent()) {
             clienteService.delete(cedula);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -69,7 +69,7 @@ public class ClienteController {
     @PutMapping("/update")
     public ResponseEntity<Cliente> updateCliente(@RequestBody ClienteDTO cliente) {
         Optional<Cliente> obj = clienteService.findById(cliente.getCedula());
-        if(obj.isPresent()) {
+        if (obj.isPresent()) {
             return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

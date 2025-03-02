@@ -1,6 +1,8 @@
 package com.modarly.modarly.domain.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +46,16 @@ public class CategoriaController {
     }
     
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Categoria> deleteCategoria(@PathVariable("id") Integer id) {
+    public ResponseEntity<Map<String,String>> deleteCategoria(@PathVariable("id") Integer id) {
         Optional<Categoria> obj = categoriaService.findById(id);
+        Map<String,String> response = new HashMap<>();
         if (obj.isPresent()) {
             categoriaService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            response.put("mensaje", "Eliminado con exito");
+            return new ResponseEntity<>(response,HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.put("mensaje", "No se encontro!");
+            return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
         }
     }
 

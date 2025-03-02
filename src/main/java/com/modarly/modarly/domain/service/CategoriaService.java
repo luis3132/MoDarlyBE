@@ -2,6 +2,7 @@ package com.modarly.modarly.domain.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,10 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public List<Categoria> findAll() {
-        return (List<Categoria>) categoriaRepository.findAll();
+        return (List<Categoria>) categoriaRepository.findAll()
+                .stream()
+                .filter(c -> Boolean.TRUE.equals(c.getEstado()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -38,6 +42,7 @@ public class CategoriaService implements ICategoriaService {
         Categoria categoriaEntity = new Categoria();
         categoriaEntity.setPadre(categoria.getPadre());
         categoriaEntity.setHija(categoria.getHija());
+        categoriaEntity.setEstado(categoria.getEstado());
         return categoriaRepository.save(categoriaEntity);
     }
 
@@ -48,9 +53,41 @@ public class CategoriaService implements ICategoriaService {
 
     @Override
     public Boolean delete(Integer id) {
-        return categoriaRepository.findById(id).map(categoria -> {
-            categoriaRepository.delete(categoria);
+        Optional<Categoria> obj = categoriaRepository.findById(id);
+        Categoria categoria = obj.get();
+        // Conmprobar si el objeto existe
+        if (!obj.isPresent()) {
+            return false;
+        }
+        // Comprobar si no tiene articulos asociados
+        List<Categoria> articulos = categoriaRepository.articuloCategoria(obj.get().getPadre());
+        if (articulos.size() > 0) {
+            // Comprar si es una clase hija
+            if (!categoria.getHija().equals("")) {
+                obj.get().setEstado(false);
+                categoriaRepository.save(obj.get());
+                return true;
+            }
+            // clase padre
+            categoriaRepository.findByPadre(obj.get().getPadre())
+                    .stream()
+                    .forEach(c -> {
+                        c.setEstado(false);
+                        categoriaRepository.save(c);
+                    });
             return true;
-        }).orElse(false);
+        }
+        // Clase hija
+        if (!categoria.getHija().equals("")) {
+            categoriaRepository.deleteById(id);
+            return true;
+        }
+
+        categoriaRepository.findByPadre(obj.get().getPadre())
+                .stream()
+                .forEach(c -> {
+                    categoriaRepository.deleteById(c.getId());
+                });
+        return true;
     }
 }
