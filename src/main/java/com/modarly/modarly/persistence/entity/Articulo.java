@@ -2,6 +2,7 @@ package com.modarly.modarly.persistence.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -45,6 +46,6 @@ public class Articulo {
     private List<Articate> articate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "articulo")
-    @JsonManagedReference("articulo-talla")
+    @JsonIgnoreProperties("articulo")
     private List<Talla> tallas;
 }

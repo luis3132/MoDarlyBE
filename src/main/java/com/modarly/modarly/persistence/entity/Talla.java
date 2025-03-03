@@ -1,6 +1,5 @@
 package com.modarly.modarly.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -40,7 +39,6 @@ public class Talla {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("tallas")
-    @JsonBackReference("articulo-talla")
     @JoinColumn(name = "articulo", referencedColumnName = "id")
     private Articulo articulo;
 }
