@@ -54,11 +54,6 @@ public class TallaController {
         return new ResponseEntity<>(tallaService.saveId(talla), HttpStatus.OK);
     }
 
-    @PostMapping("/new/list")
-    public ResponseEntity<List<TallaBasica>> createTallas(@RequestBody List<TallaDTO> tallas) {
-        return new ResponseEntity<>(tallaService.saveAll(tallas), HttpStatus.CREATED);
-    }
-
     @DeleteMapping("/delete/list")
     public ResponseEntity<List<Boolean>> deleteTalla(@RequestBody List<Long> id) {
         return new ResponseEntity<>(tallaService.delete(id), HttpStatus.OK);
