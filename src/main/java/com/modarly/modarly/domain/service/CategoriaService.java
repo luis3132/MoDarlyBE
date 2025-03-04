@@ -43,6 +43,12 @@ public class CategoriaService implements ICategoriaService {
         categoriaEntity.setPadre(categoria.getPadre());
         categoriaEntity.setHija(categoria.getHija());
         categoriaEntity.setEstado(categoria.getEstado());
+        if (!categoria.getHija().equals("")) {
+            Categoria exist = categoriaRepository.findExist(categoriaEntity.getHija(), categoriaEntity.getPadre());
+            if (exist != null) {
+                return null;
+            }
+        }
         return categoriaRepository.save(categoriaEntity);
     }
 

@@ -1,6 +1,5 @@
 package com.modarly.modarly.domain.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.modarly.modarly.domain.dto.ArticuloCategoriaDTO;
-import com.modarly.modarly.domain.dto.ArticuloDTO;
+import com.modarly.modarly.domain.dto.ArticuloNewDTO;
+import com.modarly.modarly.domain.dto.ListarInventarioDTO;
 import com.modarly.modarly.domain.service.ArticuloService;
 import com.modarly.modarly.persistence.entity.Articulo;
 
@@ -35,13 +34,13 @@ public class ArticuloController {
     private ArticuloService articuloService;
 
     @GetMapping("/list")
-    public List<ArticuloCategoriaDTO> getArticulos() {
-        return (List<ArticuloCategoriaDTO>) articuloService.findAll();
+    public ResponseEntity<ListarInventarioDTO> getArticulos() {
+        return new ResponseEntity<>(articuloService.findAll(), HttpStatus.OK);
     }
     
     @PostMapping("/new")
-    public ResponseEntity<Articulo> createArticulo(@RequestBody ArticuloDTO articuloDTO) {
-        return new ResponseEntity<>(articuloService.save(articuloDTO), HttpStatus.CREATED);
+    public ResponseEntity<Articulo> createArticulo(@RequestBody ArticuloNewDTO articuloNewDTO) {
+        return new ResponseEntity<>(articuloService.save(articuloNewDTO), HttpStatus.CREATED);
     }
     
     @PutMapping("/update")

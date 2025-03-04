@@ -41,8 +41,13 @@ public class CategoriaController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Categoria> createCategoria(@RequestBody CategoriaDTO categoriaDTO) {        
-        return new ResponseEntity<>(categoriaService.save(categoriaDTO), HttpStatus.CREATED);
+    public ResponseEntity<Categoria> createCategoria(@RequestBody CategoriaDTO categoriaDTO) {  
+        Categoria categoria = categoriaService.save(categoriaDTO);   
+        if (categoria != null) {
+            return new ResponseEntity<>(categoria, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
     
     @DeleteMapping("/delete/{id}")

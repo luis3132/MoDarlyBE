@@ -19,4 +19,7 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
     @Query("SELECT c FROM Categoria c JOIN Articate a ON c.id = a.categoria.id WHERE c.padre = :padre")
     List<Categoria> articuloCategoria(@Param("padre") String padre);
+
+    @Query("SELECT c FROM Categoria c WHERE c.hija = :hija AND c.padre = :padre")
+    Categoria findExist(@Param("hija") String hija, @Param("padre") String padre);
 }
