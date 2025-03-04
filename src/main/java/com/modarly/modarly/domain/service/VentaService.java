@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.modarly.modarly.domain.dto.VentaBasicaDTO;
-import com.modarly.modarly.domain.dto.VentaDTO;
+import com.modarly.modarly.domain.dto.VentaTallaVenttallDTO;
 import com.modarly.modarly.persistence.entity.Cliente;
 import com.modarly.modarly.persistence.entity.Venta;
 import com.modarly.modarly.persistence.repository.VentaRepository;
@@ -26,11 +26,30 @@ public class VentaService implements IVentaService {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private VenttallService venttallService;
+
+    @Autowired
+    private TallaService tallaService;
+
     @Override
-    public VentaBasicaDTO save(VentaDTO venta) {
+    public Long save(VentaTallaVenttallDTO venta) {
+
+        tallaService.saveId(venta.getTalla());
+
         Venta ventaEntity = convertToEntity(venta);
         Venta ventaSaved = ventaRepository.save(ventaEntity);
-        return convertToDTO(ventaSaved);
+
+        venta.getVenta().getVenttall().forEach(venttall -> venttall.setVenta(ventaSaved.getId()));
+
+        venttallService.saveAll(venta.getVenta().getVenttall());
+
+        return ventaSaved.getId();
+    }
+
+    @Override
+    public Optional<Venta> findById(Long id) {
+        return ventaRepository.findById(id);
     }
 
     @Override
@@ -84,14 +103,14 @@ public class VentaService implements IVentaService {
         }
     }
 
-    private Venta convertToEntity(VentaDTO venta) {
+    private Venta convertToEntity(VentaTallaVenttallDTO venta) {
         Venta ventaEntity = new Venta();
-        Cliente cliente = clienteService.findById(venta.getCliente()).get();
+        Cliente cliente = clienteService.findById(venta.getVenta().getCliente()).get();
         ventaEntity.setCliente(cliente);
-        ventaEntity.setFecha(venta.getFecha());
-        ventaEntity.setPagacon(venta.getPagacon());
-        ventaEntity.setVueltos(venta.getVueltos());
-        ventaEntity.setMetodoDePago(venta.getMetodoDePago());
+        ventaEntity.setFecha(venta.getVenta().getFecha());
+        ventaEntity.setPagacon(venta.getVenta().getPagacon());
+        ventaEntity.setVueltos(venta.getVenta().getVueltos());
+        ventaEntity.setMetodoDePago(venta.getVenta().getMetodoDePago());
         return ventaEntity;
     }
 
@@ -111,17 +130,6 @@ public class VentaService implements IVentaService {
         list.add(calendar.getTime());
 
         return list;
-    }
-
-    private VentaBasicaDTO convertToDTO(Venta venta) {
-        VentaBasicaDTO ventaDTO = new VentaBasicaDTO();
-        ventaDTO.setId(venta.getId());
-        ventaDTO.setCliente(venta.getCliente().getCedula());
-        ventaDTO.setFecha(venta.getFecha());
-        ventaDTO.setMetodoDePago(venta.getMetodoDePago());
-        ventaDTO.setPagacon(venta.getPagacon());
-        ventaDTO.setVueltos(venta.getVueltos());
-        return ventaDTO;
     }
 
 }

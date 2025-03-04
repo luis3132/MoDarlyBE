@@ -2,6 +2,7 @@ package com.modarly.modarly.domain.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.modarly.modarly.domain.dto.VentaBasicaDTO;
-import com.modarly.modarly.domain.dto.VentaDTO;
+import com.modarly.modarly.domain.dto.VentaTallaVenttallDTO;
 import com.modarly.modarly.domain.service.VentaService;
 import com.modarly.modarly.persistence.entity.Venta;
+
 
 @RestController
 @CrossOrigin("*")
@@ -28,14 +29,28 @@ public class VentasController {
     private VentaService ventaService;
 
     @PostMapping("/new")
-    public ResponseEntity<VentaBasicaDTO> createVenta(@RequestBody VentaDTO venta) {
-        return new ResponseEntity<>(ventaService.save(venta), HttpStatus.CREATED);
+    public ResponseEntity<Long> createVenta(@RequestBody VentaTallaVenttallDTO venta) {
+        Long id = ventaService.save(venta);
+        if (id == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @GetMapping("/count/{cliente}")
     public ResponseEntity<Integer> countVentasByCliente(@PathVariable("cliente") String cliente) {
         return new ResponseEntity<>(ventaService.countVentasByCliente(cliente), HttpStatus.OK);
     }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Venta> findVentaById(@PathVariable("id") Long id) {
+        Optional<Venta> venta = ventaService.findById(id);
+        if (venta.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(venta.get(), HttpStatus.OK);
+    }
+    
 
     @GetMapping("/list/hoy")
     public ResponseEntity<List<Venta>> findVentaByHoy() {

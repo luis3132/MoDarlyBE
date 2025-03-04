@@ -46,7 +46,7 @@ public class TallaController {
 
     @PostMapping("/new")
     public ResponseEntity<TallaBasica> createTalla(@RequestBody TallaDTO talla) {
-        return new ResponseEntity<>(tallaService.save(talla), HttpStatus.CREATED);
+        return new ResponseEntity<>(tallaService.save(talla), HttpStatus.OK);
     }
 
     @PutMapping("/update")

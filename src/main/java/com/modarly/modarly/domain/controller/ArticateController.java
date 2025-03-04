@@ -32,7 +32,7 @@ public class ArticateController {
 
     @PostMapping("/new/list")
     public ResponseEntity<List<Articate>> createArticateList(@RequestBody List<ArticateDTO> articates) {
-        return new ResponseEntity<>(articateService.saveAll(articates), HttpStatus.CREATED);
+        return new ResponseEntity<>(articateService.saveAll(articates), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/list")
