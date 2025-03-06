@@ -49,6 +49,11 @@ public class TallaController {
         return new ResponseEntity<>(tallaService.save(talla), HttpStatus.OK);
     }
 
+    @PostMapping("/new/list")
+    public ResponseEntity<List<TallaBasica>> createTallas(@RequestBody List<TallaDTO> tallas) {
+        return new ResponseEntity<>(tallaService.saveAll(tallas), HttpStatus.CREATED);
+    }
+
     @PutMapping("/update")
     public ResponseEntity<List<Talla>> updateTalla(@RequestBody List<TallaBasica> talla) {
         return new ResponseEntity<>(tallaService.saveId(talla), HttpStatus.OK);
