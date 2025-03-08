@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -117,6 +118,7 @@ public class VentaService implements IVentaService {
     private List<Date> getStartAndEndOfDay() {
         List<Date> list = new ArrayList<Date>();
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("America/Bogota")); // Set the desired time zone
         calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
         calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
         calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
