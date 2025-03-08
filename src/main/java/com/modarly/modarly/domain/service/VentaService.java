@@ -117,6 +117,9 @@ public class VentaService implements IVentaService {
     private List<Date> getStartAndEndOfDay() {
         List<Date> list = new ArrayList<Date>();
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        calendar.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
